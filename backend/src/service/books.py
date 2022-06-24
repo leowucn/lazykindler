@@ -366,6 +366,16 @@ def delete_all_books():
     return "success"
 
 
+def delete_all_tmp_books():
+    books = db.query(
+        "select uuid from tmp_book")
+    for book in books:
+        delete_book(book["uuid"])
+
+    db.run_sql("delete from tmp_book")
+    return "success"
+
+
 def upsert_book_cover(uuid, cover_str):
     book_info = db.query(
         "select name from book_meta where uuid='{}'".format(uuid))[0]

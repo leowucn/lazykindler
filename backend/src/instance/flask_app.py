@@ -43,6 +43,8 @@ app.add_url_rule('/api/book/delete/bykeyword',
                  view_func=books.delete_book_by_keyword, methods=['DELETE'])
 app.add_url_rule('/api/book/delete/all',
                  view_func=books.delete_all_books, methods=['DELETE'])
+app.add_url_rule('/api/book/delete/all/tmp',
+                 view_func=books.delete_all_tmp_books, methods=['DELETE'])
 app.add_url_rule('/api/book/download',
                  view_func=books.download_file, methods=['GET'])
 app.add_url_rule('/api/book/download/all',

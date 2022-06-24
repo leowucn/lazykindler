@@ -1,4 +1,10 @@
-import { deleteAllBooks, deleteAllClipping, downloadAllBooks, uploadBooks } from '@/services';
+import {
+    deleteAllBooks,
+    deleteAllClipping,
+    deleteAllTmpBooks,
+    downloadAllBooks,
+    uploadBooks,
+} from '@/services';
 import { PageContainer } from '@ant-design/pro-layout';
 import {
     Button,
@@ -63,6 +69,24 @@ const Welcome: React.FC = () => {
         });
     };
 
+    const onDeleteAllTmpBooks = () => {
+        deleteAllTmpBooks().then(() => {
+            setSnackBar({
+                message: '成功删除所有临时书籍!',
+                open: true,
+            });
+        });
+    };
+
+    const onDownloadAllBooks = () => {
+        downloadAllBooks().then(() => {
+            setSnackBar({
+                message: '已成功下载所有书籍，请到下载目录查看新建目录 lazykindler',
+                open: true,
+            });
+        });
+    };
+
     return (
         <PageContainer>
             <Card>
@@ -88,6 +112,14 @@ const Welcome: React.FC = () => {
                     onClick={onUploadFiles}
                 >
                     上传文件
+                </Button>
+
+                <Button variant="outlined" style={{ marginLeft: 20 }} onClick={onDeleteAllTmpBooks}>
+                    删除所有临时书籍
+                </Button>
+
+                <Button variant="outlined" style={{ marginLeft: 20 }} onClick={onDownloadAllBooks}>
+                    下载所有书籍
                 </Button>
 
                 <Popover
@@ -117,6 +149,7 @@ const Welcome: React.FC = () => {
                 <div style={{ float: 'right' }}>
                     <Button
                         id="basic-button"
+                        variant="outlined"
                         aria-controls={open ? 'basic-menu' : undefined}
                         aria-haspopup="true"
                         aria-expanded={open ? 'true' : undefined}
@@ -133,14 +166,6 @@ const Welcome: React.FC = () => {
                             'aria-labelledby': 'basic-button',
                         }}
                     >
-                        <MenuItem
-                            onClick={() => {
-                                downloadAllBooks();
-                                setAnchorEl(null);
-                            }}
-                        >
-                            下载所有书籍
-                        </MenuItem>
                         <MenuItem
                             onClick={() => {
                                 setDeleteDialog(true);

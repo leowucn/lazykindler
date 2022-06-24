@@ -109,3 +109,7 @@ def download_file():
 
 def download_all_files():
     return books.download_all_files()
+
+
+def delete_all_tmp_books():
+    return books.delete_all_tmp_books()

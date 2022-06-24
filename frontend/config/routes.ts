@@ -1,5 +1,5 @@
 ﻿export default [
-    { path: '/welcome', name: '上传文件', icon: 'smile', component: './Welcome' },
+    { path: '/welcome', name: '常用操作', icon: 'smile', component: './Welcome' },
     {
         path: '/book_list',
         icon: 'ReadOutlined',
