@@ -49,6 +49,8 @@ app.add_url_rule('/api/book/download',
                  view_func=books.download_file, methods=['GET'])
 app.add_url_rule('/api/book/download/all',
                  view_func=books.download_all_files, methods=['GET'])
+app.add_url_rule('/api/book/read/uuid',
+                 view_func=books.download_file_for_read, methods=['GET'])
 
 app.add_url_rule('/api/collection/create',
                  view_func=collection.create_collection, methods=['POST'])

@@ -113,3 +113,8 @@ def download_all_files():
 
 def delete_all_tmp_books():
     return books.delete_all_tmp_books()
+
+
+def download_file_for_read():
+    uuid = request.args.get('uuid')
+    return books.download_file_for_read(uuid)

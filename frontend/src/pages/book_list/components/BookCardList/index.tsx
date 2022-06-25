@@ -33,6 +33,7 @@ import { BookMetaDataType } from '../../../data';
 import ChangeInfo from '../ChangeInfoDialog';
 import Cover from '../Cover';
 import ChangeBookColl from './ChangeBookColl';
+import Reader from './Reader';
 
 const { SubMenu } = Menu;
 
@@ -49,6 +50,12 @@ const initialDialogInfo = {
     open: false,
 };
 
+const initialDialogInfoForReadBook = {
+    open: false,
+    book_title: '',
+    book_uuid: null,
+};
+
 export default function BookCardList(props: BookCardListProps) {
     const { data, fetchBooks, height } = props;
 
@@ -57,6 +64,7 @@ export default function BookCardList(props: BookCardListProps) {
         item_uuid: '',
         open: false,
     });
+    const [openReadBook, setOpenReadBook] = useState<any>(initialDialogInfoForReadBook);
     const [openDeleteBook, setOpenDeleteBook] = useState(false);
     const [deleteBookUUID, setDeleteBookUUID] = useState('');
     const [uuid, setUUID] = useState(uuidv4());
@@ -265,6 +273,18 @@ export default function BookCardList(props: BookCardListProps) {
                                             </Menu.Item>
                                             <Menu.Item
                                                 key="8"
+                                                onClick={() => {
+                                                    setOpenReadBook({
+                                                        open: true,
+                                                        book_uuid: item.uuid,
+                                                        book_title: item.name,
+                                                    });
+                                                }}
+                                            >
+                                                阅读书籍
+                                            </Menu.Item>
+                                            <Menu.Item
+                                                key="9"
                                                 onClick={() => {
                                                     handleClickOpen(item.uuid);
                                                 }}
@@ -549,6 +569,15 @@ export default function BookCardList(props: BookCardListProps) {
                 autoHideDuration={3000}
                 message={snackBar.message}
                 key={snackBar.message}
+            />
+
+            <Reader
+                open={openReadBook.open}
+                book_title={openReadBook.book_title}
+                book_uuid={openReadBook.book_uuid}
+                onClose={() => {
+                    setOpenReadBook(initialDialogInfoForReadBook);
+                }}
             />
         </div>
     );

@@ -35,7 +35,7 @@ type ChangeBookCollProps = {
 };
 
 export default function ChangeBookColl(props: ChangeBookCollProps) {
-    const { item_uuid, open, handleClose, fetchBooks } = props;
+    const { item_uuid, open, handleClose } = props;
 
     const [allColls, setAllColls] = useState<CollectionDataType[]>([]);
     const [selectedBookUUIDs, setSelectedBookUUIDs] = useState<any>([]);

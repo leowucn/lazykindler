@@ -3,8 +3,7 @@ from sqlite3 import Error
 import sys
 import base64
 from pathlib import Path
-from ..util.util import get_now
-from ..core.kindle.cover import get_mobi_cover
+from ..util.util import get_book_meta_info, get_now
 
 
 class DB:
@@ -79,14 +78,15 @@ class DB:
             sql = """INSERT INTO book_meta (uuid, name, description, author, subjects, stars, size, publisher, coll_uuids, done_dates, md5, create_time) 
                                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) """
             err = None
-            cover_info = None
+            cover = None
             try:
-                cover_info = get_mobi_cover.get_mobi_cover(book_path)
+                cover = get_book_meta_info(
+                    book_path)['cover_image_content']
             except Exception as error:
                 err = error
             finally:
                 if err is not None:
-                    cover_info = None
+                    cover = None
 
             data_tuple = (
                 uuid,
@@ -107,9 +107,9 @@ class DB:
             # 插入书籍封面信息
             sql = """INSERT INTO cover (uuid, name, size, content, create_time ) 
                                         VALUES (?, ?, ?, ?, ?) """
-            if cover_info is not None:
+            if cover is not None:
                 data_tuple = (uuid, title, sys.getsizeof(
-                    cover_info["content"]), base64.b64encode(cover_info["content"]), get_now())
+                    cover), cover, get_now())
                 cursor.execute(sql, data_tuple)
 
             # 插入临时书籍

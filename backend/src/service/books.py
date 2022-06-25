@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-from flask import jsonify
+from flask import jsonify, send_file
 import hashlib
 from ..service import cover
 import shutil
@@ -12,8 +12,7 @@ from ..routes.books import ls_books
 from ..service.collection import update_coll
 
 from ..database.database import db
-from ..core.kindle.meta.metadata import get_metadata
-from ..util.util import add_md5_to_filename, generate_uuid, get_md5, get_now, is_all_chinese, difference, remove_md5_from_filename
+from ..util.util import add_md5_to_filename, generate_uuid, get_md5, get_now, is_all_chinese, difference, remove_md5_from_filename, get_book_meta_info
 
 
 def store_book_from_path(book_path, data_path):
@@ -45,7 +44,7 @@ def store_book_from_path(book_path, data_path):
         meta = None
         has_error = False
         try:
-            meta = get_metadata(book_path)
+            meta = get_book_meta_info(book_path)
         except Exception as error:
             has_error = True
             print(
@@ -66,9 +65,13 @@ def store_book_from_path(book_path, data_path):
                 subjects = ";".join(res)
             if key == "updatedtitle":
                 title = ';'.join(value)
+            if key == "title":
+                title = ''.join(value)
             if key == "publisher":
-                publisher = ';'.join(value)
+                publisher = ''.join(value)
             if key == "author":
+                author = ";".join(value)
+            if key == "authors":
                 author = ";".join(value)
 
         if title is not None:
@@ -466,3 +469,21 @@ def download_all_files():
         p2 = os.path.join(target_dir, original_filename)
         os.rename(p1, p2)
     return "success"
+
+
+def download_file_for_read(uuid):
+    book_info = db.query(
+        "select md5 from book_meta where uuid='{}'".format(uuid))[0]
+    target_md5 = book_info['md5']
+
+    path = Path(os.path.dirname(os.path.abspath(__file__))
+                ).parent.parent.absolute()
+    data_path = os.path.join(path, "data")
+    is_exist = os.path.exists(data_path)
+    if not is_exist:
+        return "success"
+
+    filepaths = ls_books(data_path)
+    for filepath in filepaths:
+        if target_md5 in filepath:
+            return send_file(filepath, as_attachment=True)

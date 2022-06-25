@@ -5,15 +5,25 @@ import os
 import pathlib
 import hashlib
 from pathlib import Path
+import epub_meta
+
+
+def get_book_meta_info(book_path):
+    return epub_meta.get_epub_metadata(
+        book_path, read_cover_image=True, read_toc=True)
+
 
 # 支持的电子书格式
 supportedBookFormat = {
-    ".mobi": True,
-    ".azw3": True,
+    # ".mobi": True,
+    # ".azw3": True,
+    ".epub": True,
 }
+
 
 def if_ext_supported(ext):
     return ext.lower() in supportedBookFormat
+
 
 def ls_books(dir):
     files = list()
@@ -83,7 +93,6 @@ def utf8len(s):
     return len(s.encode('utf-8'))
 
 
-
 def add_md5_to_filename(filepath):
     filename, file_extension = os.path.splitext(filepath)
     print(file_extension)
@@ -91,9 +100,8 @@ def add_md5_to_filename(filepath):
 
     con_str = "______"
     if con_str + md5 + file_extension not in filepath:
-        return filename + con_str  + md5 + file_extension
+        return filename + con_str + md5 + file_extension
     return filepath
-
 
 
 def remove_md5_from_filename(filepath):
