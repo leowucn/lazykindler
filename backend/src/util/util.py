@@ -15,9 +15,8 @@ def get_book_meta_info(book_path):
 
 # 支持的电子书格式
 supportedBookFormat = {
-    # ".mobi": True,
-    # ".azw3": True,
-    ".epub": True,
+    ".mobi": True,
+    ".azw3": True,
 }
 
 
@@ -107,3 +106,35 @@ def add_md5_to_filename(filepath):
 def remove_md5_from_filename(filepath):
     filename, file_extension = os.path.splitext(filepath)
     return filename.split("______", 1)[0] + file_extension
+
+
+def escape_string(str):
+    return str.translate(str.maketrans({"-":  r"\-",
+                                        "]":  r"\]",
+                                        "[":  r"\[",
+                                        "【":  r"\【",
+                                        "】":  r"\】",
+                                        "&":  r"\&",
+                                        ".":  r"\.",
+                                        "/":  r"\/",
+                                        "•":  r"\•",
+                                        "\\": r"\\",
+                                        "^":  r"\^",
+                                        "$":  r"\$",
+                                        "(":  r"\(",
+                                        ")":  r"\)",
+                                        "《":  r"\《",
+                                        "》":  r"\》",
+                                        "*":  r"\*",
+                                        ".":  r"\.",
+
+                                        "*":  r"\*",
+                                        "+":  r"\+",
+                                        "?":  r"\?",
+                                        "{":  r"\{",
+                                        "|":  r"\|",
+                                        ",":  r"\,",
+                                        "!":  r"\!",
+                                        "~":  r"\~",
+                                        })
+                         )

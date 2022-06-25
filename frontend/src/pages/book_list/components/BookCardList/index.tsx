@@ -25,7 +25,7 @@ import {
 import Divider from '@mui/material/Divider';
 import { Menu } from 'antd';
 import { List as AntList, Card } from 'antd';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Dropzone from 'react-dropzone';
 import { v4 as uuidv4 } from 'uuid';
 

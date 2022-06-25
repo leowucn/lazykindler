@@ -70,13 +70,15 @@ export default function Reader(props: ReaderProps) {
     const locationChanged = (epubcifi: any) => {
         setLocation(epubcifi);
         if (renditionRef.current && tocRef.current) {
-            const { displayed, href } = renditionRef.current.location.start;
-            const chapter = tocRef.current.find((item: any) => item.href === href);
-            setPage(
-                `Page ${displayed.page} of ${displayed.total} in chapter ${
-                    chapter ? chapter.label : 'n/a'
-                }`,
-            );
+            if (renditionRef.current.location != null) {
+                const { displayed, href } = renditionRef.current.location.start;
+                const chapter = tocRef.current.find((item: any) => item.href === href);
+                setPage(
+                    `Page ${displayed.page} of ${displayed.total} in chapter ${
+                        chapter ? chapter.label : 'n/a'
+                    }`,
+                );
+            }
         }
     };
 

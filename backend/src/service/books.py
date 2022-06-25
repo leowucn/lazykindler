@@ -3,19 +3,22 @@
 
 import os
 from flask import jsonify, send_file
-import hashlib
 from ..service import cover
 import shutil
 from pathlib import Path
+import re
 from ..routes.books import ls_books
 
 from ..service.collection import update_coll
 
+from ..core.kindle.meta.metadata import get_metadata
+
 from ..database.database import db
-from ..util.util import add_md5_to_filename, generate_uuid, get_md5, get_now, is_all_chinese, difference, remove_md5_from_filename, get_book_meta_info
+from ..util.util import add_md5_to_filename, escape_string, generate_uuid, get_md5, get_now, is_all_chinese, difference, remove_md5_from_filename, get_book_meta_info
 
 
 def store_book_from_path(book_path, data_path):
+
     if_new_item = None
     uuid = generate_uuid()
 
@@ -44,7 +47,7 @@ def store_book_from_path(book_path, data_path):
         meta = None
         has_error = False
         try:
-            meta = get_book_meta_info(book_path)
+            meta = get_metadata(book_path)
         except Exception as error:
             has_error = True
             print(
@@ -66,12 +69,10 @@ def store_book_from_path(book_path, data_path):
             if key == "updatedtitle":
                 title = ';'.join(value)
             if key == "title":
-                title = ''.join(value)
+                title = ';'.join(value)
             if key == "publisher":
-                publisher = ''.join(value)
+                publisher = ';'.join(value)
             if key == "author":
-                author = ";".join(value)
-            if key == "authors":
                 author = ";".join(value)
 
         if title is not None:
@@ -472,18 +473,46 @@ def download_all_files():
 
 
 def download_file_for_read(uuid):
-    book_info = db.query(
-        "select md5 from book_meta where uuid='{}'".format(uuid))[0]
-    target_md5 = book_info['md5']
+    try:
+        book_info = db.query(
+            "select md5 from book_meta where uuid='{}'".format(uuid))[0]
+        target_md5 = book_info['md5']
 
-    path = Path(os.path.dirname(os.path.abspath(__file__))
-                ).parent.parent.absolute()
-    data_path = os.path.join(path, "data")
-    is_exist = os.path.exists(data_path)
-    if not is_exist:
-        return "success"
+        path = Path(os.path.dirname(os.path.abspath(__file__))
+                    ).parent.parent.absolute()
+        data_path = os.path.join(path, "data")
+        is_exist = os.path.exists(data_path)
+        if not is_exist:
+            return "success"
 
-    filepaths = ls_books(data_path)
-    for filepath in filepaths:
-        if target_md5 in filepath:
-            return send_file(filepath, as_attachment=True)
+        filepaths = ls_books(data_path)
+        for filepath in filepaths:
+            # 这里的filepath是mobi或者azw3格式的路径地址
+            # 如果对应的epub格式电子书不存在，就开始转换格式
+            # 然后发送转换后的格式
+            if target_md5 in filepath:
+                if ' ' in filepath:
+                    new_filepath = filepath.replace(" ", "_")
+                    os.rename(filepath, new_filepath)
+                    filepath = new_filepath
+
+                epub_filepath = os.path.splitext(filepath)[0]+'.epub'
+                is_exist = os.path.exists(epub_filepath)
+                if not is_exist:
+                    command = "/Applications/calibre.app/Contents/MacOS/ebook-convert " + \
+                        filepath + " " + epub_filepath
+                    command = escape_string(command)
+                    print(
+                        "in download_file_for_read 开始转换书籍----------------command = ", command)
+                    os.system(
+                        command
+                    )
+
+                print(
+                    "in download_file_for_read, epub_filepath----------------", epub_filepath)
+                return send_file(epub_filepath, as_attachment=True)
+    except Exception as error:
+        print("in download_file_for_read ------------------------发生错误, err = ", error)
+        return "fail"
+
+    return "fail"

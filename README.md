@@ -45,7 +45,8 @@ mobi 和 azw3。其他类型的电子书在导入时会自动被忽略。\
 平台里的书籍都可以在操作里点击`下载`，下载后书籍会被存放到用户主目录的 `下载` 或者 `Download`。
 
 ### 阅读
-平台提供了阅读书籍的基本功能。
+
+平台提供了阅读书籍的基本功能。平台支持上传的书籍格式是 `azw3` 和 `mobi`，目前没找到使用 reactjs 实现的合适的阅读这两种格式电子书的库，因此在开始阅读书籍时，平台会把这两种格式转换为 `epub`格式，使用的工具是 `/Applications/calibre.app/Contents/MacOS/ebook-convert`，因此要求使用平台时电脑要安装 `calibre`软件。因为阅读书籍涉及到电子书格式转换，所以第一次阅读某一本书籍时阅读器打开速度会比较慢，后面再次打开就快了。转换后的书籍被存放到了目录 `backend/data`。
 
 ### 处理流程
 
@@ -132,7 +133,6 @@ yarn start
 ![Xnip2022-06-25_14-02-50](https://user-images.githubusercontent.com/16133390/175760755-0583b4c3-8f97-4c16-8940-e15d25511ce1.jpg)
 
 ![Xnip2022-06-25_14-03-01](https://user-images.githubusercontent.com/16133390/175760758-1ed900c1-d1bc-4c03-ae31-67ebda7dcf69.jpg)
-
 
 # 其他
 
