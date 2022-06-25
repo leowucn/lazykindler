@@ -44,6 +44,9 @@ mobi 和 azw3。其他类型的电子书在导入时会自动被忽略。\
 
 平台里的书籍都可以在操作里点击`下载`，下载后书籍会被存放到用户主目录的 `下载` 或者 `Download`。
 
+### 阅读
+平台提供了阅读书籍的基本功能。
+
 ### 处理流程
 
 在 `书籍 -> 书库` 页面下展示的书籍属于我们正式存储的书籍，刚导入的书籍会被展示在 `书籍 -> 临时导入` 页面下。书籍被添加到指定集合以后，会被自动转移到 `书籍 -> 书库` 页面下。这样可以方便我们区分需要长期存储的书籍和临时导入的书籍，之所以要做区分，是因为长期存储的书籍经过了我们的筛选，删掉了不喜欢的书籍，并且进行了分类，而临时导入的书籍一般五花八门。如果对长期存储的书籍和临时导入的书籍不做区分，这样对管理会带来一些不便。
@@ -125,6 +128,11 @@ yarn start
 <img width="1438" alt="Snipaste_2022-03-04_18-45-41" src="https://user-images.githubusercontent.com/16133390/167545605-2484499d-c53f-4819-9492-c3147b3ffca6.jpg">
 <img width="1438" alt="Snipaste_2022-03-04_18-45-43" src="https://user-images.githubusercontent.com/16133390/167545628-82ce810d-0c77-448e-8b5c-152c859148aa.jpg">
 <img width="1438" alt="Snipaste_2022-03-04_18-45-42" src="https://user-images.githubusercontent.com/16133390/167545619-34eb7788-fa19-4262-9417-4ed490e464ac.jpg">
+
+![Xnip2022-06-25_14-02-50](https://user-images.githubusercontent.com/16133390/175760755-0583b4c3-8f97-4c16-8940-e15d25511ce1.jpg)
+
+![Xnip2022-06-25_14-03-01](https://user-images.githubusercontent.com/16133390/175760758-1ed900c1-d1bc-4c03-ae31-67ebda7dcf69.jpg)
+
 
 # 其他
 
