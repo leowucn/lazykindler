@@ -54,7 +54,7 @@ mobi 和 azw3。其他类型的电子书在导入时会自动被忽略。\
 
 ### 关于备份
 
-平台的数据库采用了 `sqlite3`，目的是为了方便备份。初次启动平台时，会自动创建并初始化该数据库文件。数据库位置是 `backend/lazykindler.db`，该文件包含了平台的所有数据信息。另外往平台导入的书籍都被复制到了 `backend/data` 目录下，这样很方便备份。需要注意的是，平台为了方便操作，在 `backend/data` 下的书籍名后面都被添加了 `md5`。因此如果要对平台里所有书籍进行备份，只要拷贝 `backend/lazykindler.db` 和 `backend/data`。
+平台的数据库采用了 `sqlite3`，目的是为了方便备份。初次启动平台时，会自动创建并初始化该数据库文件。数据库位置是 `backend/lazykindler.db`，该文件包含了平台的所有数据信息。另外往平台导入的书籍都被复制到了 `backend/data` 目录下，这样很方便备份。需要注意的是，平台为了方便操作，在 `backend/data` 下的书籍名后面都被添加了 `md5`。因此如果要对平台里所有书籍以及数据进行备份，只需要保存 `backend/lazykindler.db` 和 `backend/data` 这两个目录，下次在其他地方启动服务前，只要把`backend/lazykindler.db` 和 `backend/data` 复制到对应位置即可。
 
 ## kindle
 
