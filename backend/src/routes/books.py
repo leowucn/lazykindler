@@ -115,8 +115,7 @@ def delete_all_tmp_books():
     return books.delete_all_tmp_books()
 
 
-def download_file_for_read():
-    uuid = request.args.get('uuid')
+def download_file_for_read(uuid):
     if uuid == "null":
         return "nothing"
     return books.download_file_for_read(uuid)

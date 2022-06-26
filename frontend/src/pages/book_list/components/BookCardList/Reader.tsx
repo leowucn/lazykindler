@@ -106,7 +106,7 @@ export default function Reader(props: ReaderProps) {
                             title={book_title}
                             showToc
                             locationChanged={locationChanged}
-                            url={`${backend_server_addr}/api/book/read/uuid?uuid=${book_uuid}`}
+                            url={`${backend_server_addr}/api/book/read/uuid/${book_uuid}/file.epub`}
                             tocChanged={(toc) => (tocRef.current = toc)}
                             getRendition={(rendition) => {
                                 renditionRef.current = rendition;

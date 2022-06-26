@@ -34,8 +34,8 @@ def ls_books(dir):
             else:
                 if if_ext_supported(pathlib.Path(abspath).suffix):
                     files.append(abspath)
-                else:
-                    print("ls_books. 忽略文件: ", abspath)
+                # else:
+                #     print("ls_books. 忽略文件: ", abspath)
         except FileNotFoundError as err:
             print('invalid directory\n', 'Error: ', err)
     return files
