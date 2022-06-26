@@ -33,7 +33,8 @@ import { BookMetaDataType } from '../../../data';
 import ChangeInfo from '../ChangeInfoDialog';
 import Cover from '../Cover';
 import ChangeBookColl from './ChangeBookColl';
-import Reader from './Reader';
+// import Reader from './Reader';
+import ReaderV2 from './ReaderV2';
 
 const { SubMenu } = Menu;
 
@@ -571,7 +572,16 @@ export default function BookCardList(props: BookCardListProps) {
                 key={snackBar.message}
             />
 
-            <Reader
+            {/* <Reader
+                open={openReadBook.open}
+                book_title={openReadBook.book_title}
+                book_uuid={openReadBook.book_uuid}
+                onClose={() => {
+                    setOpenReadBook(initialDialogInfoForReadBook);
+                }}
+            /> */}
+
+            <ReaderV2
                 open={openReadBook.open}
                 book_title={openReadBook.book_title}
                 book_uuid={openReadBook.book_uuid}
