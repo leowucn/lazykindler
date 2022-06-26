@@ -15,7 +15,7 @@ const ControlIconBtnWrapper = ({ title, children }: Props) => {
 
 const BtnWrapper = styled.div`
     display: flex;
-    width: 400px;
+    width: 352px;
     align-items: center;
     justify-content: space-around;
     padding: 8px 0;

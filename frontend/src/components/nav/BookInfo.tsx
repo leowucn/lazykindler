@@ -15,7 +15,6 @@ const BookInfo = ({ src = '', title, publisher, author }: Props) => {
 
 const Container = styled.div`
     display: flex;
-    padding: 24px;
     width: 400px;
 `;
 

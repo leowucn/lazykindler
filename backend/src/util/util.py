@@ -108,6 +108,8 @@ def remove_md5_from_filename(filepath):
     return filename.split("______", 1)[0] + file_extension
 
 
+# 转换文件格式时，文件名中可能会包含各种特殊字符，
+# 如果未做处理, 转换命令可能会执行失败
 def escape_string(str):
     return str.translate(str.maketrans({"-":  r"\-",
                                         "]":  r"\]",
@@ -127,14 +129,18 @@ def escape_string(str):
                                         "》":  r"\》",
                                         "*":  r"\*",
                                         ".":  r"\.",
-
                                         "*":  r"\*",
                                         "+":  r"\+",
                                         "?":  r"\?",
                                         "{":  r"\{",
+                                        "}":  r"\}",
                                         "|":  r"\|",
                                         ",":  r"\,",
                                         "!":  r"\!",
                                         "~":  r"\~",
+                                        ";":  r"\;",
+                                        "、":  r"\、",
+                                        "`":  r"\`",
+                                        "·":  r"\·",
                                         })
                          )
