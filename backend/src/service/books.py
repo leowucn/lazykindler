@@ -6,7 +6,6 @@ from flask import jsonify, send_file
 from ..service import cover
 import shutil
 from pathlib import Path
-import re
 from ..routes.books import ls_books
 
 from ..service.collection import update_coll
@@ -15,6 +14,7 @@ from ..core.kindle.meta.metadata import get_metadata
 
 from ..database.database import db
 from ..util.util import add_md5_to_filename, escape_string, generate_uuid, get_md5, get_now, is_all_chinese, difference, remove_md5_from_filename, get_book_meta_info
+import json
 
 
 def store_book_from_path(book_path, data_path):
@@ -41,6 +41,8 @@ def store_book_from_path(book_path, data_path):
         subjects = ""
         # 集合
         coll_uuids = ""
+        # asin
+        asin = ""
 
         book_size = os.path.getsize(book_path)
 
@@ -74,6 +76,9 @@ def store_book_from_path(book_path, data_path):
                 publisher = ';'.join(value)
             if key == "author":
                 author = ";".join(value)
+            if key == "asin":
+                if len(value) > 0:
+                    asin = value[0]
 
         if title is not None:
             title = title.strip()
@@ -83,6 +88,8 @@ def store_book_from_path(book_path, data_path):
             author = author.strip()
         if subjects is not None:
             subjects = subjects.strip()
+        if asin is not None:
+            asin = asin.strip()
 
         if title == "":
             base = os.path.basename(book_path)
@@ -98,7 +105,9 @@ def store_book_from_path(book_path, data_path):
             subjects = None
         if coll_uuids == "":
             coll_uuids = None
-        db.insert_book(uuid, title, None, author, subjects,
+        if asin == "":
+            asin = None
+        db.insert_book(uuid, title, asin, None, author, subjects,
                        book_size, publisher, coll_uuids, md5, book_path)
 
         shutil.copy2(book_path, data_path)

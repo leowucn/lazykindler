@@ -180,14 +180,14 @@ const Reader = ({ url, book_title, loadingView }: Props) => {
                 ref={optionRef}
             />
 
-            <Learning
+            {/* <Learning
                 control={learningControl}
                 onToggle={onLearningToggle}
                 onClickHighlight={onClickHighlight}
                 emitEvent={emitEvent}
                 viewerRef={viewerRef}
                 ref={learningRef}
-            />
+            /> */}
 
             <ContextMenu
                 active={isContextMenu}
@@ -198,7 +198,6 @@ const Reader = ({ url, book_title, loadingView }: Props) => {
                 onUpdateHighlight={onUpdateHighlight}
                 onContextmMenuRemove={onContextmMenuRemove}
             />
-
         </div>
     );
 };

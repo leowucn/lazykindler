@@ -3,6 +3,7 @@ CREATE TABLE book_meta (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	uuid                TEXT,
     name                TEXT,         -- 书名
+    asin                TEXT,         -- asin
     description         TEXT,         -- 描述
     author              TEXT,         -- 作者
 	subjects            TEXT,         -- 标签

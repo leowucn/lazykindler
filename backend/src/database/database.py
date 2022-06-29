@@ -69,14 +69,14 @@ class DB:
         except Exception as error:
             print("Failed to get record. ", error)
 
-    def insert_book(self, uuid, title, description, author, subjects, book_size, publisher, coll_uuids,
+    def insert_book(self, uuid, title, asin, description, author, subjects, book_size, publisher, coll_uuids,
                     md5, book_path):
         cursor = self.conn.cursor()
         cursor.execute("begin")
 
         try:
             # 插入书籍元数据信息
-            sql = """INSERT INTO book_meta (uuid, name, description, author, subjects, stars, size, publisher, coll_uuids, done_dates, md5, create_time) 
+            sql = """INSERT INTO book_meta (uuid, name, asin, description, author, subjects, stars, size, publisher, coll_uuids, done_dates, md5, create_time) 
                                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) """
             err = None
             cover = None
@@ -91,6 +91,7 @@ class DB:
             data_tuple = (
                 uuid,
                 title,
+                asin,
                 description,
                 author,
                 subjects,
